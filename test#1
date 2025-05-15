@@ -1,3 +1,154 @@
-test#1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Wedding Invitation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #fff8dc;
+      color: #333;
+      overflow-x: hidden;
+    }
+    .page {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .page img {
+      max-width: 90%;
+      max-height: 50vh;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .title {
+      font-size: 2.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .section {
+      font-size: 1.2em;
+      margin: 10px 0;
+      text-align: center;
+    }
+    .page-btns {
+      margin-top: 30px;
+    }
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4682b4;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #315f7b;
+    }
+    .turquoise { background-color: #40e0d0; color: black; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="<span class='turquoise'>URL_TO_DEAR_GOD_BY_AVENGED_SEVENFOLD</span>" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
 
-im triying this thing today
+  <div class="page" id="page1">
+    <div class="title">Dear <span id="guestName">Guest</span>,</div>
+    <div class="subtitle">You are cordially invited to the Royal Wedding of</div>
+    <div class="title">Prince William & Catherine Middleton</div>
+    <img src="<span class='turquoise'>HEADER_IMAGE_URL</span>" alt="Royal Couple" />
+    <div class="page-btns">
+      <button onclick="nextPage()">View Details</button>
+    </div>
+  </div>
+
+  <div class="page" id="page2" style="display:none">
+    <div class="title">Wedding Ceremony</div>
+    <div class="section">Date: <span class='turquoise'>29 April 2011</span></div>
+    <div class="section">Time: <span class='turquoise'>11:00 AM</span></div>
+    <div class="section">Location: <a href="<span class='turquoise'>https://goo.gl/maps/X8J3SkHb3hX8L9FF7</span>" target="_blank">Westminster Abbey, London</a></div>
+    <img src="<span class='turquoise'>EVENT_IMAGE_1_URL</span>" alt="Ceremony" />
+    <div class="page-btns">
+      <button onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <div class="page" id="page3" style="display:none">
+    <div class="title">Reception Party</div>
+    <div class="section">Following the ceremony at <span class='turquoise'>Buckingham Palace</span></div>
+    <div class="section">Please join us for a royal celebration</div>
+    <img src="<span class='turquoise'>EVENT_IMAGE_2_URL</span>" alt="Reception" />
+    <div class="page-btns">
+      <button onclick="nextPage()">Photo Memories</button>
+    </div>
+  </div>
+
+  <div class="page" id="page4" style="display:none">
+    <div class="title">Royal Moments</div>
+    <div class="section">Enjoy the journey through cherished memories</div>
+    <div class="page-btns">
+      <button onclick="showSlides()">Start Slideshow</button>
+    </div>
+  </div>
+
+  <div class="page" id="slideshow" style="display:none; flex-direction: column;">
+    <img id="slideImg" src="" alt="Slideshow" />
+    <div class="page-btns">
+      <button onclick="prevSlide()">Previous</button>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    function nextPage() {
+      document.getElementById(`page${currentPage}`).style.display = 'none';
+      currentPage++;
+      document.getElementById(`page${currentPage}`).style.display = 'flex';
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('to');
+    if (name) document.getElementById("guestName").innerText = decodeURIComponent(name);
+
+    const slides = [
+      '<span class="turquoise">SLIDE_IMAGE_1_URL</span>',
+      '<span class="turquoise">SLIDE_IMAGE_2_URL</span>',
+      '<span class="turquoise">SLIDE_IMAGE_3_URL</span>'
+    ];
+    let currentSlide = 0;
+
+    function showSlides() {
+      document.getElementById(`page${currentPage}`).style.display = 'none';
+      document.getElementById("slideshow").style.display = 'flex';
+      document.getElementById("slideImg").src = slides[currentSlide];
+    }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      document.getElementById("slideImg").src = slides[currentSlide];
+    }
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      document.getElementById("slideImg").src = slides[currentSlide];
+    }
+  </script>
+</body>
+</html>
